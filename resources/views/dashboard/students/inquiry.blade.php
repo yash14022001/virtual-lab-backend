@@ -1,0 +1,101 @@
+@extends('dashboard.base')
+
+@section('content')
+    @if(session('message'))
+    <div class="flash-message" id="flash-message" data-expires="5000" style="padding: 2rem;">
+        <p class="alert {{ Session::get('alert-class', 'alert-info') }}">{{session('message')}}</p>
+    </div> <!-- end .flash-message -->
+    @endif
+
+    <div class="container-fluid">
+          <div class="animated fadeIn">
+            <div class="row">
+              <div class="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                <div class="card">
+                    <div class="card-header">
+                      <i class="fa fa-align-justify"></i>{{ __('Inquiry') }}</div>
+                    <div class="card-body">
+                        {{-- <div class="col-sm-12 col-md-6 col-lg-5 col-xl-4">
+                            <form method="POST" action="{{ route('department.store') }}">
+                                @csrf
+                                <div class="form-group row">
+                                    <label>University : </label>
+                                    <select class="form-control" name="university">
+                                      @foreach ($universities as $university)
+                                        <option value="{{$university->id}}">{{$university->name}}</option>
+                                      @endforeach
+                                    </select>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label>Department name : </label>
+                                    <input class="form-control" type="text" placeholder="{{ __('Department') }}" name="name" required autofocus>
+                                    @if($errors->has('name'))
+                                        <div class="text-danger">{{ $errors->first('name') }}</div>
+                                    @endif
+                                </div>
+                                  --}}
+
+                                {{-- <div class="row">
+                                  <button class="btn btn-block btn-success" id="add-student" type="button" data-toggle="modal" data-target="#add-modal">Add Student</button>
+                                </div> --}}
+                            </form>
+                        </div>
+
+                        <br>
+                        <table class="table table-responsive-sm table-striped">
+                        <thead>
+                          <tr>
+                            <th style="width: 100px;">Sr. no. </th>
+                            <th>Student's Name</th>
+                            <th>Student's Email</th>
+                            <th>Student's University</th>
+                            <th>Inquiry</th>
+                            <th>Inquiry Recevied at</th>
+                            <th style="width: 10rem;">Delete Inquiry</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                            <?php $index = $inquiries->perPage() * ($inquiries->currentPage() - 1) + 1; ?>
+                          @foreach($inquiries as $inquiry)
+                            <tr>
+                              <td>{{$index++}}</td>
+                              <td><strong>{{ $inquiry->student->name }}</strong></td>
+                              <td><strong>{{ $inquiry->student->email }}</strong></td>
+                              <td><strong>{{ $inquiry->student->university->name }}</strong></td>
+                              <td><strong>{{ $inquiry->message }}</strong></td>
+                              <td><strong>{{ $inquiry->created_at }}</strong></td>
+                              <td>
+                                <form action="{{ route('inquiry.destroy', $inquiry->id ) }}" method="POST">
+                                    @method('DELETE')
+                                    @csrf
+                                    <button class="btn btn-block btn-danger">Delete</button>
+                                </form>
+                              </td>
+                            </tr>
+                          @endforeach
+                        </tbody>
+                      </table>
+                      {{ $inquiries->links() }}
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        
+
+@endsection
+
+@section('javascript')
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script>
+    setTimeout(function() {
+        $('#flash-message').fadeOut('fast');
+    }, 3000);
+
+
+</script>
+
+@endsection

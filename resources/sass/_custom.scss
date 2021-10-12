@@ -1,0 +1,15 @@
+// Here you can add other styles
+
+.c-header.c-header-fixed {
+    top: 0px;
+}
+
+.click-file {
+    cursor: pointer;
+}
+
+.c-sidebar .c-sidebar-nav-link.c-active,
+.c-sidebar .c-active.c-sidebar-nav-dropdown-toggle {
+    color: #fff;
+    background: #321fdb;
+}
